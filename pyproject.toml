@@ -1,0 +1,13 @@
+[project]
+name = "minha"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.12.0",
+    "pydantic-settings>=2.11.0",
+    "pygame>=2.6.1",
+    "selenium>=4.36.0",
+    "webdriver-manager>=4.0.2",
+]
