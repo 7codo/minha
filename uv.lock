@@ -159,6 +159,7 @@ dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "pygame" },
+    { name = "requests" },
     { name = "selenium" },
     { name = "webdriver-manager" },
 ]
@@ -168,6 +169,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.12.0" },
     { name = "pydantic-settings", specifier = ">=2.11.0" },
     { name = "pygame", specifier = ">=2.6.1" },
+    { name = "requests", specifier = ">=2.32.5" },
     { name = "selenium", specifier = ">=4.36.0" },
     { name = "webdriver-manager", specifier = ">=4.0.2" },
 ]

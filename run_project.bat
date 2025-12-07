@@ -22,55 +22,39 @@ if errorlevel 1 (
 echo Python found: 
 python --version
 
-REM Check if virtual environment exists
-if not exist "venv" (
-    echo Creating virtual environment...
-    python -m venv venv
+REM ==== Use .venv and pyproject.toml instead of venv and requirements.txt ====
+
+REM Check if .venv folder exists, otherwise create it with uv
+if not exist ".venv" (
+    echo Creating virtual environment with uv...
+    uv venv
     if errorlevel 1 (
-        echo ERROR: Failed to create virtual environment
+        echo ERROR: Failed to create virtual environment with uv
         pause
         exit /b 1
     )
     echo Virtual environment created successfully
-    REM Activate virtual environment
-    echo Activating virtual environment...
-    call venv\Scripts\activate.bat
-    if errorlevel 1 (
-        echo ERROR: Failed to activate virtual environment
-        pause
-        exit /b 1
-    )
-
-    REM Install/update dependencies
-    echo Installing dependencies...
-    uv pip install -r requirements.txt
-    if errorlevel 1 (
-        echo ERROR: Failed to install dependencies
-        pause
-        exit /b 1
-    )
 ) else (
     echo Virtual environment already exists
-    REM Activate virtual environment
-    echo Activating virtual environment...
-    call venv\Scripts\activate.bat
-    if errorlevel 1 (
-        echo ERROR: Failed to activate virtual environment
-        pause
-        exit /b 1
-    )
-    
-    REM Install/update dependencies
-    echo Installing dependencies...
-    pip install -r requirements.txt
-    if errorlevel 1 (
-        echo ERROR: Failed to install dependencies
-        pause
-        exit /b 1
-    )
 )
 
+REM Activate virtual environment (.venv is the uv default)
+echo Activating virtual environment...
+call .venv\Scripts\activate.bat
+if errorlevel 1 (
+    echo ERROR: Failed to activate virtual environment
+    pause
+    exit /b 1
+)
 
+REM Install/update dependencies with uv and pyproject.toml
+echo Installing dependencies using uv and pyproject.toml...
+uv pip install -r pyproject.toml
+if errorlevel 1 (
+    echo ERROR: Failed to install dependencies
+    pause
+    exit /b 1
+)
 
 REM Check if .env file exists
 if not exist ".env" (
@@ -99,20 +83,11 @@ if not exist "sound.mp3" (
     echo.
 )
 
-REM Activate virtual environment before running script
-echo Activating virtual environment...
-call venv\Scripts\activate.bat
-if errorlevel 1 (
-    echo ERROR: Failed to activate virtual environment
-    pause
-    exit /b 1
-)
-
-REM Run the main script
+REM Run the main script with uv run
 echo.
 echo Starting ANEM automation script...
 echo ================================================
-python anem_automation.py
+uv run anem_automation.py
 
 REM Keep window open to see results
 echo.
